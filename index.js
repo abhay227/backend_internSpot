@@ -7,7 +7,7 @@ const {connect}=require("./db")
 const router=require("./Routes/index")
 const instance = require("./razorpayInstance");  // Import the instance
 require('dotenv').config()
-const port =5000
+const port = process.env.PORT || 5000
 
 
 
