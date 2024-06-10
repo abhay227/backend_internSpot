@@ -47,6 +47,14 @@ function sendOTP(email, otp) {
   });
 }
 
+// List of 10 offer IDs (replace these with your actual offer IDs)
+const offerIds = ['offer_OL4QPKg5R15Uot', 'offer_OL4S0QugeCme3a', 'offer_OL4U7jxgbqzweg', 'offer_OL4VWVLRW4foFm', 'offer_OL4bSAkNIlm1zf', 'offer_OL4cjVA7g5AwQp','offer_OL4kgrIe48jqxm','offer_OL4m2i0thHeHwq','offer_OL4nBeeyy6XcC4','offer_OL4oQMaVVUuJ33'];
+
+function getRandomOfferId(offerIds) {
+    const randomIndex = Math.floor(Math.random() * offerIds.length);
+    return offerIds[randomIndex];
+}
+
 router.post('/send-otp', (req, res) => {
   const { email } = req.body;
 
@@ -183,6 +191,8 @@ router.post("/subscribe",timeCheck, async (req, res) => {
     const plan = req.body.plan;
     const user = await User.findOne({ uid: req.body.user.uid });
     console.log("Found user:", user);
+    const randomOfferId = getRandomOfferId(offerIds);
+
 
     if (!user) {
       return res.status(404).json({
@@ -211,6 +221,7 @@ router.post("/subscribe",timeCheck, async (req, res) => {
       plan_id,
       customer_notify: 1,
       total_count: 12,
+      offer_id:randomOfferId
     });
 
     user.subscription.id = subscription.id;
